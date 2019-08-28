@@ -29,5 +29,43 @@ def convert_y_to_vector(y):
 
 y_v_train = convert_y_to_vector(y_train)
 y_v_test = convert_y_to_vector(y_test)
-
 # print(y_train[0], y_v_train[0])
+
+# Define number of nodes in each layer of neural network
+# 64 input nodes for each pixel in the image
+# and 10 output nodes for 0-9 possible values
+nn_structure = [64, 30, 10]
+
+def f(x):
+  """
+  sigmoid activation function
+  """
+  return 1 / (1 + np.exp(-x))
+
+def g(x):
+  """
+  gradient funtion for sigmoid
+  """
+  return f(x) * (1 - f(x))
+
+def setup_and_init_weights(nn_structure):
+  """
+  initialise weights and bias for each layer with random values
+  """
+  W = {}
+  b = {}
+  for l in range(1, len(nn_structure)):
+    W[l] = np.random.random_sample((nn_structure[l], nn_structure[l-1]))
+    b[l] = np.random.random_sample((nn_structure[l],))
+  return W, b
+
+def init_tri_values(nn_structure):
+  """
+  initialise mean accumulation value for each layer
+  """
+  tri_W = {}
+  tri_b = {}
+  for l in range(1, len(nn_structure)):
+    tri_W[l] = np.zeros((nn_structure[l], nn_structure[l-1]))
+    tri_b[l] = np.zeros((nn_structure[l],))
+  return tri_W, tri_b
