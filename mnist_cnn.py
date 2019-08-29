@@ -3,7 +3,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pylab as plt
-from cnn_functions import train_nn
+from cnn_functions import train_nn, predict_y
+from sklearn.metrics import accuracy_score
 
 digits = load_digits()
 
@@ -40,7 +41,10 @@ nn_structure = [64, 30, 10]
 
 # Train the network
 W, b, avg_cost_func = train_nn(nn_structure, X_train, y_v_train)
-plt.plot(avg_cost_func)
-plt.ylabel('Average J')
-plt.xlabel('Iteration number')
-plt.show()
+# plt.plot(avg_cost_func)
+# plt.ylabel('Average J')
+# plt.xlabel('Iteration number')
+# plt.show()
+
+y_pred = predict_y(W, b, X_test, 3)
+print(accuracy_score(y_test, y_pred)*100)
